@@ -1,4 +1,4 @@
-## JWT Authentication Server
+## Shikder Ambulance Server
 
 This will be used as a template for authentication to the server. Starting this project by cloning it will save you time for authentication.
 
