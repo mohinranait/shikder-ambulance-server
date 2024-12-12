@@ -1,11 +1,12 @@
 const express = require('express');
 const { SERVER_PORT } = require('./accessEnv');
-const { userRoute } = require('./routes');
+const { userRoute, postRoute, uploadImageRouter } = require('./routes');
 const rateLimit = require("express-rate-limit")
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const { connectMongodbDatabase } = require('./config/ConnectMongoDB');
 const { errorResponse } = require('./utils/responseHandler');
+const cors = require('cors')
 
 const app = express();
 
@@ -21,16 +22,18 @@ const limiter = rateLimit({
 app.use(limiter)
 app.use(express.json());
 
-// app.use(
-//     cors({
-//         origin: ['http://localhost:3000', 'https://account-social-media-app.vercel.app'],
-//         credentials: true,
-//         methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-//     })
-// )
+app.use(
+    cors({
+        origin: ['http://localhost:3000'],
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+    })
+)
 app.use(cookieParser())
 
 app.use('/api/', userRoute);
+app.use('/api/', postRoute)
+app.use('/api/', uploadImageRouter)
 
 app.get('/',(req, res) => {
     res.send('hello');
