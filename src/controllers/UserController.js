@@ -80,13 +80,13 @@ const loginUser = async (req, res,next) => {
 
         // send response 
         res.cookie("access_token", token, {
-               httpOnly: true,
-            secure: true,
-            samesite: "none",
+            //    httpOnly: true,
+            // secure: true,
+            // samesite: "none",
 
-            // httpOnly: true,
-            // secure: productionMode == 'production',
-            // sameSite: productionMode == 'production' ? 'none' : 'strict'
+            httpOnly: true,
+            secure: productionMode == 'production',
+            sameSite: productionMode == 'production' ? 'none' : 'strict'
         })
 
       
