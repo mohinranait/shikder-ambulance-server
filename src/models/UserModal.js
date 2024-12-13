@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 
 const userSchema = new Schema({
     name : {
@@ -24,6 +24,15 @@ const userSchema = new Schema({
         type: String,
         required: true,
         trim:true,
+    },
+    profile:{
+        type: Types.ObjectId ,
+        ref: "Media"
+    },
+    role:{
+        type: String,
+        default:"User",
+        enum:['Admin',"User"]
     },
     status:{
         type: String,

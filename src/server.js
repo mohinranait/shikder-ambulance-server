@@ -36,7 +36,7 @@ app.use('/api/', postRoute)
 app.use('/api/', uploadImageRouter)
 
 app.get('/',(req, res) => {
-    res.send('hello');
+    res.send('Shikder ambulance server running');
 })
 
 

@@ -19,13 +19,15 @@ const postSchema = new Schema({
     },
     image: {
         featuresImage: {
-            type: Schema.Types.ObjectId,
-            ref: "Media",
+            type: String,
         },
         thumbnail: {
-            type: Schema.Types.ObjectId,
-            ref: "Media",
+            type: String
         },
+    },
+    content:{
+        type:String
+
     },
     contents: [
         {

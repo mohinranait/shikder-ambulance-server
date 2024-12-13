@@ -32,7 +32,7 @@ const uploadImage = async (req, res, next) => {
 
 
         return successResponse(res, {
-            statusCode: 200,
+            statusCode: 201,
             message: "Image uploaded",
             payload: {
                 file
@@ -48,6 +48,25 @@ const uploadImage = async (req, res, next) => {
     }
 }
 
+const getAllMedias = async (req, res,next) => {
+    try {
+        const userId = req?.user?.id;
+        if(!userId) return;
+
+        const medias = await Media.find({});
+        return successResponse(res, {
+            statusCode:200,
+            payload:{
+                medias
+            }
+            
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
-    uploadImage
+    uploadImage,
+    getAllMedias
 }

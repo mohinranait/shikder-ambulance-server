@@ -100,12 +100,65 @@ const updatePostById = async (req, res,next) => {
     }
 }
 
+// get all post 
+const getAllPost = async (req, res, next) => {
+    try {
+        let query = {
+            status: "Publish"
+        };
+        const search = req.query?.search || '';
+        const searchExp = new RegExp('.*'+ search+'.*','i');
+        const access = req.query?.access
+
+        // Search
+        if(search){
+            query.$or = [
+                {title: {$regex: searchExp } },
+                {slug: {$regex: searchExp } },
+            ]
+        }
+
+        if(access !== 'unpublish'){
+            query.status = "Unpublish"
+        }
+
+        if(access !== 'all'){
+            query.status = {$in:["Unpublish","Unpublish"]}
+        }
+
+        const posts = await Post.find()?.populate({
+            path: 'author',
+            select:"-password",
+            populate:{
+                path: 'profile',
+                select: '_id fileType fileUrl extension'
+            }
+        });
+        return successResponse(res, {
+            statusCode:200,
+            message:"Posts",
+            payload:{
+                posts,
+            }
+        })
+    } catch (error) {
+        next(error)
+    }
+} 
+
 // Post details
 const postViewBySlug = async (req, res,next) => {
     try {
         const slug = req.params?.slug;
    
-        const post = await Post.findOne({slug})
+        const post = await Post.findOne({slug}).populate({
+            path:"author",
+            select: '-password',
+            populate: {
+                path:"profile",
+                 select: '_id fileType fileUrl extension'
+            }
+        })
   
         if(!post) throw createError(404, "Post not-found")
 
@@ -157,4 +210,5 @@ module.exports = {
     postViewBySlug,
     updatePostById,
     deletePostById,
+    getAllPost,
 }

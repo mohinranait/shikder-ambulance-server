@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 // filter file 
 const fileFilter = (req, file, cb) => {
     const exName = path.extname(file.originalname)
-    if (!['jpg', 'png'].includes(exName.substring(1))) {
+    if (!['jpg', 'png','webp'].includes(exName.substring(1))) {
         // console.log("File Filter extansion error");
         return cb(new Error("File validation"))
     }
