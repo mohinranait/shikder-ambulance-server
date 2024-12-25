@@ -103,11 +103,15 @@ const updatePostById = async (req, res,next) => {
 // get all post 
 const getAllPost = async (req, res, next) => {
     try {
+        
         let query = {
             status: "Publish"
         };
         const search = req.query?.search || '';
         const searchExp = new RegExp('.*'+ search+'.*','i');
+
+        const limit = req?.query?.limit || 10;
+        // access = "user", admin, manager
         const access = req.query?.access
 
         // Search
@@ -118,22 +122,20 @@ const getAllPost = async (req, res, next) => {
             ]
         }
 
-        if(access !== 'unpublish'){
-            query.status = "Unpublish"
+ 
+
+        if(access === 'admin'){
+            query.status = {$in:["Unpublish","Publish"]}
         }
 
-        if(access !== 'all'){
-            query.status = {$in:["Unpublish","Unpublish"]}
-        }
-
-        const posts = await Post.find()?.populate({
+        const posts = await Post.find(query)?.populate({
             path: 'author',
             select:"-password",
             populate:{
                 path: 'profile',
                 select: '_id fileType fileUrl extension'
             }
-        });
+        }).limit(Number(limit));
         return successResponse(res, {
             statusCode:200,
             message:"Posts",

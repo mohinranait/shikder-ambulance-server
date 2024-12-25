@@ -73,6 +73,10 @@ const postSchema = new Schema({
     seoKeyword: {
         type: [String],
     },
+    reviews:{
+        type: Number,
+        default:0,
+    }
 
 },{timestamps:true})
 

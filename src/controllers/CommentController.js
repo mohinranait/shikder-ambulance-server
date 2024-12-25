@@ -30,7 +30,12 @@ const createNewComment = async (req, res, next) => {
 */
 const getAllComments = async (req, res,next) => {
     try {
-        const comments = await Comment.find({});
+        const postId = req?.query?.postId;
+       
+        const query=  {
+            postId,
+        }
+        const comments = await Comment.find(query);
       
         
         return successResponse(res,{
