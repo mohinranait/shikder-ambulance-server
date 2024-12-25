@@ -13,6 +13,9 @@ const postSchema = new Schema({
         required:true,
         trim:true,
     },
+    shortDescription: {
+        type: String,
+    },
     slug: {
         type:String,
         trim:true,

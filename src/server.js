@@ -1,6 +1,6 @@
 const express = require('express');
 const { SERVER_PORT } = require('./accessEnv');
-const { userRoute, postRoute, uploadImageRouter } = require('./routes');
+const { userRoute, postRoute, uploadImageRouter, commentRouter } = require('./routes');
 const rateLimit = require("express-rate-limit")
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
@@ -33,6 +33,7 @@ app.use(cookieParser())
 
 app.use('/api/', userRoute);
 app.use('/api/', postRoute)
+app.use('/api/', commentRouter)
 app.use('/api/', uploadImageRouter)
 
 app.get('/',(req, res) => {

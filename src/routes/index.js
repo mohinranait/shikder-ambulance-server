@@ -1,3 +1,4 @@
+const commentRouter = require("./commentRoute");
 const uploadImageRouter = require("./mediaRoute");
 const postRoute = require("./postRoute");
 const userRoute = require("./userRoute");
@@ -5,5 +6,6 @@ const userRoute = require("./userRoute");
 module.exports = {
     userRoute,
     postRoute,
-    uploadImageRouter
+    uploadImageRouter,
+    commentRouter
 }
