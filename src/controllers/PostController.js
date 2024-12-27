@@ -13,13 +13,13 @@ const createNewPost = async (req, res, next) => {
         if( !user?.id) throw createError(500, "You can't create new post");
 
         const body=  req.body;
-        const title= body?.title;
-        if(!title) throw createError(400, "Title is required");
+        const postTitle= body?.postTitle;
+        if(!postTitle) throw createError(400, "Post title is required");
 
         // Generate slug
         let slug = '';
         if(!body?.slug){
-            slug = createSlug(title) 
+            slug = createSlug(postTitle) 
         }else{
             slug = body.slug
         }
@@ -76,7 +76,7 @@ const updatePostById = async (req, res,next) => {
         // Check duplicate slug 
         if(existsPost?.slug !== body?.slug){
             const existingPostBySlug = await Post.findOne({slug: body?.slug}).select('slug'); 
-            if( existsPost?.slug !== existingPostBySlug?.slug ){
+            if(  existingPostBySlug ){
                 throw createError(404 ,"Slug is already in use by another post.")
             }
         }
@@ -117,7 +117,7 @@ const getAllPost = async (req, res, next) => {
         // Search
         if(search){
             query.$or = [
-                {title: {$regex: searchExp } },
+                {postTitle: {$regex: searchExp } },
                 {slug: {$regex: searchExp } },
             ]
         }
