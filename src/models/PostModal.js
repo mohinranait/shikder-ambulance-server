@@ -70,6 +70,10 @@ const postSchema = new Schema({
     seoDescription: {
         type: String,
     },
+    publishDate:{
+        type : Date,
+        default: Date.now,
+    },
     seoKeyword: {
         type: [String],
     },

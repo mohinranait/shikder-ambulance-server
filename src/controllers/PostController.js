@@ -105,7 +105,8 @@ const getAllPost = async (req, res, next) => {
     try {
         
         let query = {
-            status: "Publish"
+            status: "Publish",
+            // publishDate: {$lte: new Date() + 1}
         };
         const search = req.query?.search || '';
         const searchExp = new RegExp('.*'+ search+'.*','i');
