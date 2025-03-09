@@ -129,7 +129,8 @@ const getAllPost = async (req, res, next) => {
             query.status = {$in:["Unpublish","Publish"]}
         }
 
-        const posts = await Post.find(query)?.populate({
+        const posts = await Post.find(query)
+        .sort({createdAt:-1})?.populate({
             path: 'author',
             select:"-password",
             populate:{
@@ -189,12 +190,12 @@ const deletePostById = async (req,res, next) => {
             throw createError(500, "Somthing wrong for delete post");
         }
 
-        const post = await Post.findById(postId).select('author');
-        if(!post) throw createError(404, "Post not-found for delete");
+        // const post = await Post.findById(postId).select('author');
+        // if(!post) throw createError(404, "Post not-found for delete");
 
-        if( post?.author?.toString() !== userId ){
-            throw createError(500, "You can't delete this post for access issue");
-        }
+        // if( post?.author?.toString() !== userId ){
+        //     throw createError(500, "You can't delete this post for access issue");
+        // }
 
         await Post.findByIdAndDelete(postId)
 
