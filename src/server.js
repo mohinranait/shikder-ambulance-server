@@ -1,6 +1,6 @@
 const express = require('express');
 const { SERVER_PORT } = require('./accessEnv');
-const { userRoute, postRoute, uploadImageRouter, commentRouter, emailRouter } = require('./routes');
+const { userRoute, postRoute, uploadImageRouter, commentRouter, emailRouter, moneyRouter } = require('./routes');
 const rateLimit = require("express-rate-limit")
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
@@ -20,6 +20,7 @@ const limiter = rateLimit({
 })
 
 app.use(limiter)
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(
@@ -36,6 +37,7 @@ app.use('/api/', postRoute)
 app.use('/api/', commentRouter)
 app.use('/api/', uploadImageRouter)
 app.use('/api/', emailRouter)
+app.use('/api/', moneyRouter)
 
 app.get('/',(req, res) => {
     res.send('Shikder ambulance server running');
