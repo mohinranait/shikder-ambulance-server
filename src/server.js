@@ -25,7 +25,7 @@ app.use(express.json());
 
 app.use(
     cors({
-        origin: ['http://localhost:3000','https://shikder-ambulance.vercel.app'],
+        origin: ['http://localhost:3000','https://shikder-ambulance.vercel.app','https://shikderambulance.com'],
         credentials: true,
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     })
